@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from io import BytesIO
 import numpy as np
+from flask_cors import CORS
 
 from ipywidgets import interact, widgets
 
@@ -47,6 +48,8 @@ def buscar_id_csv(id, carpeta):
 
 
 app = Flask(__name__)
+CORS(app, origin="http://localhost:3000")
+
 
 @app.route('/get_blurred_image', methods=['POST'])
 def get_blurred_image():

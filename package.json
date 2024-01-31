@@ -1,5 +1,5 @@
 {
-  "homepage": "https://eduardocilvetiua.github.io/canvas-draw-tool/",
+  "homepage": "https://eduardocilvetiua.github.io/image-sketch-project/",
   "name": "test",
   "version": "0.1.0",
   "private": true,
@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-api": "cd api && env\\scripts\\flask run --no-debugger",
+    "start-api": "cd api && env/bin/flask run --no-debugger",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
@@ -48,6 +48,5 @@
   },
   "devDependencies": {
     "gh-pages": "^6.1.1"
-  },
-  "proxy": "http://localhost:5000"
+  }
 }
