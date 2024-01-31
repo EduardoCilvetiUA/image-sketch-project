@@ -1,0 +1,328 @@
+.App {
+  text-align: center;
+  font-family: 'Pangolin', cursive;
+  color: #333; /* Cambié el color del texto principal */
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 4.5rem; /* Cambié el tamaño de los encabezados */
+
+  color: #000000; /* Cambié el color de los encabezados */
+}
+h2 {
+
+  color: #000000; /* Cambié el color de los encabezados */
+}
+
+body {
+  background-color: #ecc956; /* Cambié el color de fondo */
+}
+
+Button {
+  background-color: #28a745; /* Cambié el color de fondo del botón */
+  color: #fff; /* Cambié el color del texto del botón */
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+.Button:hover {
+  background-color: #218838; /* Cambié el color de fondo del botón al pasar el ratón */
+}
+
+.boton-frontal {
+  top: auto;
+  left: auto;
+  transition: all 0.15s linear 0s;
+  position: static;
+  display: inline-block;
+  padding: 15px 25px;
+  background-color: #ffd139; /* Reemplaza "your-yellow-color" con el valor real */
+  margin-top: 10px;
+
+  text-transform: uppercase;
+  color: #404040; /* Reemplaza "your-brown-color" con el valor real */
+  font-family: 'Pangolin', cursive;
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  box-shadow: -6px 6px 0 #404040; /* Reemplaza "your-brown-color" con el valor real */
+  text-decoration: none;
+
+  &:hover {
+    top: 3px;
+    left: -3px;
+    box-shadow: -3px 3px 0 #404040; /* Reemplaza "your-brown-color" con el valor real */
+
+    &::after {
+      top: 1px;
+      left: -2px;
+      width: your-angle-o; /* Reemplaza "your-angle-o" con el valor real */
+      height: your-angle-o; /* Reemplaza "your-angle-o" con el valor real */
+    }
+
+    &::before {
+      bottom: -2px;
+      right: 1px;
+      width: your-angle-o; /* Reemplaza "your-angle-o" con el valor real */
+      height: your-angle-o; /* Reemplaza "your-angle-o" con el valor real */
+    }
+  }
+
+  &::after {
+    transition: all 0.15s linear 0s;
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -4px;
+    width: your-angle; /* Reemplaza "your-angle" con el valor real */
+    height: your-angle; /* Reemplaza "your-angle" con el valor real */
+    background-color: #ffd139; /* Reemplaza "your-brown-color" con el valor real */
+    transform: rotate(45deg);
+    z-index: -1;
+  }
+
+  &::before {
+    transition: all 0.15s linear 0s;
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    right: 2px;
+    width: your-angle; /* Reemplaza "your-angle" con el valor real */
+    height: your-angle; /* Reemplaza "your-angle" con el valor real */
+    background-color: #404040; /* Reemplaza "your-brown-color" con el valor real */
+    transform: rotate(45deg);
+    z-index: -1;
+  }
+}
+
+.boton-frontal:hover {
+  background-color: #ffd139;
+  color: #404040; /* Reemplaza "your-brown-color" con el valor real */
+}
+
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+
+.responsive-image {
+  max-width: 100%; /* La imagen no será más ancha que su contenedor */
+  max-height: 600px; /* Establece la altura máxima en píxeles */
+  width: auto; /* La anchura se ajustará automáticamente para mantener la proporción */
+  height: auto; /* La altura se ajustará automáticamente para mantener la proporción */
+
+  /* Centra la imagen horizontalmente */
+  margin: 0 auto;
+
+  /* Establece un ancho máximo específico para pantallas más grandes */
+  @media (min-width: 768px) {
+    max-width: 400px; /* Establece el ancho máximo para escritorio en píxeles */
+  }
+}
+
+
+.elementos-dibujos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  gap: 10px;
+}
+
+
+@media screen and (max-width: 1080px) {
+  .elementos-dibujos {
+    flex-direction: column;
+  }
+  .drawing-controls {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.image-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-container img {
+  border: 3px solid #000;
+  border-radius: 10px;
+  background-color: 'white'
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.boton-reload {
+  background: #fbca1f;
+  font-family: inherit;
+  padding: 0.6em 1.3em;
+  font-weight: 900;
+  font-size: 18px;
+  border: 3px solid black;
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
+  cursor: pointer;
+
+}
+.boton-reload:hover {
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em;
+
+}
+.boton:active{
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em;
+
+}
+
+/* Loader 1 */
+.loader-1 {
+	height: 40px;
+	width: 40px;
+  position: flex;
+	-webkit-animation: loader-1-1 4.8s linear infinite;
+	        animation: loader-1-1 4.8s linear infinite;
+}
+@-webkit-keyframes loader-1-1 {
+	0%   { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes loader-1-1 {
+	0%   { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+.loader-1 span {
+	display: block;
+	position: absolute;
+	top: 0; left: 0;
+	bottom: 0; right: 0;
+	margin: auto;
+	height: 32px;
+	width: 32px;
+	clip: rect(0, 32px, 32px, 16px);
+	-webkit-animation: loader-1-2 1.2s linear infinite;
+	        animation: loader-1-2 1.2s linear infinite;
+}
+@-webkit-keyframes loader-1-2 {
+	0%   { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(220deg); }
+}
+@keyframes loader-1-2 {
+	0%   { transform: rotate(0deg); }
+	100% { transform: rotate(220deg); }
+}
+.loader-1 span::after {
+	content: "";
+	position: absolute;
+	top: 0; left: 0;
+	bottom: 0; right: 0;
+	margin: auto;
+	height: 32px;
+	width: 32px;
+	clip: rect(0, 32px, 32px, 16px);
+	border: 3px solid #000000;
+	border-radius: 50%;
+	-webkit-animation: loader-1-3 1.2s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+	        animation: loader-1-3 1.2s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+}
+@-webkit-keyframes loader-1-3 {
+	0%   { -webkit-transform: rotate(-140deg); }
+	50%  { -webkit-transform: rotate(-160deg); }
+	100% { -webkit-transform: rotate(140deg); }
+}
+@keyframes loader-1-3 {
+	0%   { transform: rotate(-140deg); }
+	50%  { transform: rotate(-160deg); }
+	100% { transform: rotate(140deg); }
+}
+
+.drawing-controls {
+  border: 5px solid #282c34;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.drawing-controls button {
+  margin-top: 10px;
+  width: 90px;
+  height: 40px;
+  border-radius: 0;
+  border: 1px solid #000000;
+  background-color: #28a745;
+  color: #000000;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ffe800;
+    color: #000000;
+    
+  }
+}
+
+.drawing-controls label {
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+
