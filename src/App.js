@@ -100,7 +100,7 @@ function App() {
       formData.append('company', imageData.datos.company);
       formData.append('image', blob, imageData.datos.company + '_' + imageData.datos.title + '_' + imageData.datos.id + '.jpeg');
 
-      axios.post('http://localhost:5000/upload_image', formData)
+      axios.post('/upload_image', formData)
         .then(response => {
         })
         .catch(error => {
@@ -208,7 +208,7 @@ function App() {
     <div className="App">
       {!sketchStarted && (
         <>
-          <h1>Herramienta dibujo en react</h1>
+          <h1>Sketches capture</h1>
           <div className="imagen-boton">
             {isLoading && !imageData &&
               <div className="loader-container">
