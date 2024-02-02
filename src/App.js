@@ -30,7 +30,6 @@ function App() {
       
       formData.append('blur', counter);
       counter += 5;
-
       try {
         const response = await axios.post('http://45.137.194.69:8000/get_blurred_image', formData);
         setBlurImage(response.data);
@@ -59,6 +58,9 @@ function App() {
 
   const newImage = () => {
     setSketchStarted(false);
+    setBlurImage(null);
+    clearInterval(intervalRef.current);
+    clearTimeout(timer.current);
     // Limpiar los estados relacionados con la imagen actual
     setImageData(null);
     setIsLoading(true);

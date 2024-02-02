@@ -48,7 +48,7 @@ def buscar_id_csv(id, carpeta):
 
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
-CORS(app, origins="http://45.137.194.69")
+CORS(app, origins=["http://45.137.194.69", "http://localhost:3000"])
 
 
 @app.route('/get_blurred_image', methods=['POST'])
