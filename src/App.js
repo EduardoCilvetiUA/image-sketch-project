@@ -32,7 +32,7 @@ function App() {
       counter += 5;
 
       try {
-        const response = await axios.post('http://localhost:5000/get_blurred_image', formData);
+        const response = await axios.post('http://45.137.194.69:8000/get_blurred_image', formData);
         setBlurImage(response.data);
       } catch (error) {
         console.error('Error al obtener los datos:', error);
@@ -65,7 +65,7 @@ function App() {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/get_image');
+        const response = await axios.get('http://45.137.194.69:8000/get_image');
         setImageData(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -79,7 +79,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/get_image');
+        const response = await axios.get('http://45.137.194.69:8000/get_image');
         setImageData(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -100,7 +100,7 @@ function App() {
       formData.append('company', imageData.datos.company);
       formData.append('image', blob, imageData.datos.company + '_' + imageData.datos.title + '_' + imageData.datos.id + '.jpeg');
 
-      axios.post('/upload_image', formData)
+      axios.post('http://45.137.194.69:8000/upload_image', formData)
         .then(response => {
         })
         .catch(error => {
