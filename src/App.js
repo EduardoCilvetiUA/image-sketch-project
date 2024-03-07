@@ -9,7 +9,6 @@ function App() {
 
   const [brushRadius, setBrushRadius] = useState(3);
   const [brushColor, setBrushColor] = useState('black');
-  const [selectedColor, setSelectedColor] = useState('black');
   const canvasRef = useRef();
   // Datos imagenes URL
   const [imageData, setImageData] = useState(null)
@@ -17,9 +16,24 @@ function App() {
   const [blurimage, setBlurImage] = useState(null);
   const intervalRef = useRef(null);
   const timer = useRef(null);
+  const [appTitle, setAppTitle] = useState("Sketch App");
+  const [intensityIncrement, setIntensityIncrement] = useState(null);
+  const [speed, setSpeed] = useState(null);
+  const [limit_blured_timer, setLimit_Blured_Timer] = useState(null)
+  
+  const LoadConfig =  () => {
+    var json = require("./config.json") 
+    setAppTitle(json["title"])
+    setBrushRadius(json["brush_radius"])
+    setBrushColor(json["brush_color"])
+    setIntensityIncrement(json["intensityIncrement"])
+    setSpeed(json["speed"]); // Agrega esta línea para establecer la velocidad desde el archivo de configuración
+    setLimit_Blured_Timer(json["limit_blured_timer"])
+};
 
-
-  const startCounter = async () => {
+const startCounter = async () => {
+    console.log(speed);
+    const intervalTime = 2000 / speed; // Calcula el tiempo del intervalo basado en la velocidad
     let counter = 0; // Estado para el contador
 
     intervalRef.current = setInterval(async () => {
@@ -29,23 +43,25 @@ function App() {
       formData.append('name_file', imageData.datos.file_name);
       
       formData.append('blur', counter);
-      counter += 5;
+      
       try {
         const response = await axios.post('http://45.137.194.69:8000/get_blurred_image', formData);
         setBlurImage(response.data);
       } catch (error) {
         console.error('Error al obtener los datos:', error);
       }
-    }, 2000);
+
+      counter += intensityIncrement; // Incrementa el contador según el incremento de intensidad
+    }, intervalTime);
 
     // Detener el intervalo después de 4 segundos (en milisegundos)
 
-
     timer.current = setTimeout(() => {
-      clearInterval(intervalRef.current);
-    }, 20000);
+    clearInterval(intervalRef.current);
+    }, limit_blured_timer);
     setBlurImage(null);
-  };
+};
+
 
 
 
@@ -76,9 +92,14 @@ function App() {
     };
     fetchData();
   };
+  const handleClearInterval = () => {
+    clearInterval(intervalRef.current);
+    console.log('clear')
+  }
 
 
   useEffect(() => {
+    LoadConfig()
     const fetchData = async () => {
       try {
         const response = await axios.get('http://45.137.194.69:8000/get_image');
@@ -148,16 +169,6 @@ function App() {
     getCanvasImage();
   };
 
-  //Canvas
-  const handleBrushSizeChange = (event) => {
-    setBrushRadius(event.target.value);
-  };
-
-  const handleColorChange = (event) => {
-    const newColor = event.target.value;
-    setSelectedColor(newColor);
-    setBrushColor(newColor);
-  };
 
   const handleClearCanvas = () => {
     canvasRef.current.clear();
@@ -176,33 +187,10 @@ function App() {
         <i className="bi bi-arrow-counterclockwise"></i>
       </Button>
       <label htmlFor="brushSize">
-        <i className="bi bi-brush"></i> Brush Size:
       </label>
-      <input
-        id="brushSize"
-        type="range"
-        min="1"
-        max="10"
-        value={brushRadius}
-        onChange={handleBrushSizeChange}
-        style={{ marginLeft: '5px', marginBottom: '10px' }}
-      />
-      <label htmlFor="colorPicker">
-        <i className="bi bi-eyedropper"></i> Brush Color:
-      </label>
-      <input
-        id="colorPicker"
-        type="color"
-        value={selectedColor}
-        onChange={handleColorChange}
-        style={{ marginLeft: '5px', marginBottom: '10px' }}
-      />
       <br />
     </div>
   );
-
-
-
 
 
 
@@ -210,7 +198,7 @@ function App() {
     <div className="App">
       {!sketchStarted && (
         <>
-          <h1>Sketches capture</h1>
+          <h1>{appTitle}</h1>
           <div className="imagen-boton">
             {isLoading && !imageData &&
               <div className="loader-container">
@@ -219,7 +207,6 @@ function App() {
             }
             {imageData && (
               <>
-                <h2>Nombre de la imagen: {imageData.datos.title}</h2>
                 <div className="image-container">
                   <img src={`data:image/jpeg;base64,${imageData.imagen}`} alt="Imagen" className="responsive-image" />
                 </div>
@@ -237,8 +224,7 @@ function App() {
       )}
       {sketchStarted && (
         <>
-          <h1>Herramienta dibujo en react</h1>
-          <h2>Nombre de la imagen: {imageData.datos.title}</h2>
+          <h1>{appTitle}</h1>
             <div className="elementos-dibujos-boton">
               <div className="elementos-dibujos">
                 {blurimage &&
@@ -258,6 +244,7 @@ function App() {
                     hideGrid={true}
                     hideInterface={true}
                     lazyRadius={0}
+                    onChange={LoadConfig}
                     style={{ border: '3px solid #000', borderRadius: '10px' }}
                   />
                   
@@ -267,7 +254,8 @@ function App() {
               <Button className="boton-frontal" variant="primary" style={{padding: '5px 10px', marginRight: "10px"}} onClick={newImage}>
                 <i className="bi bi-arrow-left-circle"></i>
               </Button>
-              <Button className="boton-frontal" variant='primary' onClick={handleSave} style={{ marginTop: '20px' }}>Subir datos a Flask</Button>
+              <Button className="boton-frontal" variant='primary' onClick={handleSave} style={{ marginTop: '20px' }}>Save</Button>
+              <Button className="boton-frontal" variant='primary' onClick={handleClearInterval} style={{ marginTop: '20px' }}>clear interval</Button>
             </div>
         </>
       )}

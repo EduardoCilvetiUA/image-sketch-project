@@ -1,0 +1,8 @@
+{
+    "title": "Sketch App",
+    "brush_radius": 3,
+    "brush_color": "black",
+    "intensityIncrement": 5,
+    "speed": 1,
+    "limit_blured_timer":20000
+}

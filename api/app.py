@@ -6,6 +6,7 @@ import csv
 import base64
 import re
 
+import json
 import cv2
 import matplotlib.pyplot as plt
 from PIL import Image
@@ -16,6 +17,16 @@ from flask_cors import CORS
 from ipywidgets import interact, widgets
 
 
+
+DATASETS = []
+
+def load_config():
+    global DATASETS
+    with open("config.json", "r") as fp:
+        config = json.load(fp)
+        DATASETS = config["datasets"]
+
+load_config()
     
 def upload_to_csv(id, draw_name, company):
     data = []
@@ -95,30 +106,29 @@ def get_blurred_image():
 
 @app.route('/upload_image', methods=['POST'])
 def upload_image():
+    # Verificar si todos los parámetros requeridos están presentes en la solicitud
     if 'id' not in request.form or 'company' not in request.form or 'title' not in request.form or 'image' not in request.files:
         return jsonify({'error': 'Missing parameters'}), 400
 
+    # Obtener los datos de la solicitud
     id = request.form['id']
     image_name = request.form['title']
     file = request.files['image']
     company = request.form['company']
 
-    
-
-    # Asegúrate de que la carpeta para cargar imágenes exista
-    upload_folder = 'Sketches'
+    # Asegurarse de que la carpeta para cargar imágenes exista para la empresa
+    upload_folder = os.path.join('Sketches', company)
     if not os.path.exists(upload_folder):
         os.makedirs(upload_folder)
 
-
-    # Guarda la imagen con un nombre seguro
+    # Guardar la imagen con un nombre seguro
     filename = secure_filename(file.filename)
     file.save(os.path.join(upload_folder, filename))
 
+    # Actualizar el archivo CSV con la información de la imagen cargada
     upload_to_csv(id, filename, company)
 
-    # Aquí puedes realizar acciones adicionales según tus necesidades
-    # (por ejemplo, guardar información en una base de datos)
+    # Respuesta exitosa con información sobre la imagen cargada
     return jsonify({'id': id, 'image_name': image_name, 'message': 'Image uploaded successfully'})
 
 
@@ -136,10 +146,12 @@ def add_white_background(image_path):
 
 @app.route('/get_image', methods=['GET'])
 def get_image():
+    load_config()
     found = False
     while found == False:
-        dataset_folders = [f.path for f in os.scandir('Datasets') if f.is_dir()]
-        random_folder = os.path.join(random.choice(dataset_folders), 'train')
+        # dataset_folders = [f.path for f in os.scandir('Datasets') if f.is_dir()]
+        random_dataset = random.choice(DATASETS)
+        random_folder = os.path.join('Datasets', random_dataset, 'train')
         segundo_folder = random_folder.split(os.path.sep)[1]
         
         image_files = [f for f in os.listdir(random_folder) if f.endswith('.jpg') or f.endswith('.png')]
