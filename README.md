@@ -114,3 +114,38 @@ $ sudo systemctl reload nginx
 ```
 
 Con esto, la página debería estar desplegada con la IP del servidor público.
+
+
+# Actualizacion de datos en config.json
+
+## FrontEnd:
+
+Parametros:
+
+```
+{
+"backend_ip": String dominio (ejemplo: "localhost:5000" sin http),
+"title": String,
+"brush_radius": Integer (recomendable 2 o 3),
+"brush_color": String (ejemplo "black"),
+"intensityIncrement": Integer (recomendable 5 - 7),
+"speed": Integer (recomendable 1, es el tiempo 2000ms/speed en mandar request al backend),
+"limit_blured_timer": Integer (recomendable 20000, ya que significaria que en 20 segundos pararia de mandar request al backend)
+}
+```
+
+Si se cambia algo de esto, hay que tambien correr el comando:
+```
+npm run build
+```
+
+## Backend:
+
+Parametros:
+
+```
+{
+"datasets": List (lista de carpetas las cuales tiene el dataset para elegir, ejemplo: ["Cartier", "Homy", "IKEA", "Pepeganga", "UNIQLO", "WorldMarket"])
+}
+```
+Intentar no escribir mal los datasets.
